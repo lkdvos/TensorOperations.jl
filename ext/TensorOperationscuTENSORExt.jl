@@ -219,7 +219,7 @@ end
 # Backend
 # ---------------------------------------------------------------------------------------- #
 
-const CUDABackend = TensorOperations.Backend{:cuda}
+const CUDABackend = TensorOperations.Backend{:cuTENSOR}
 
 function TensorOperations.tensoradd!(C::AbstractArray, pC::Index2Tuple,
                                      A::AbstractArray, conjA::Symbol, α::Number, β::Number,
