@@ -249,7 +249,8 @@ function TensorOperations.tensorcontract!(C::CuArray, pC::Index2Tuple,
                                           A::AbstractArray, pA::Index2Tuple, conjA::Symbol,
                                           B::AbstractArray, pB::Index2Tuple, conjB::Symbol,
                                           α, β, ::CUDABackend)
-    return tensorcontract!(C, pC, adapt(CuArray, A), pA, conjA, adapt(CuArray, B), pB, conjB, α, β)
+    return tensorcontract!(C, pC, adapt(CuArray, A), pA, conjA, adapt(CuArray, B), pB,
+                           conjB, α, β)
 end
 
 function TensorOperations.tensortrace!(C::AbstractArray, pC::Index2Tuple,
