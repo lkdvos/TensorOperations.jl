@@ -1,3 +1,10 @@
+@testset "cuTENSOR dependency check" begin
+    @test_throws ArgumentError begin
+        ex = :(@cutensor A[a, b, c, d] := B[a, b, c, d])
+        macroexpand(Main, ex)
+    end
+end
+
 using cuTENSOR
 using LinearAlgebra: norm
 using TensorOperations: IndexError
