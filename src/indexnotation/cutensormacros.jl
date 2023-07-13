@@ -1,4 +1,6 @@
 macro cutensor(ex::Expr)
+    haskey(Base.loaded_modules, Base.identify_package("cuTENSOR")) ||
+        throw(ArgumentError("cuTENSOR not loaded: add `using cuTENSOR` or `import cuTENSOR` before using `@cutensor`"))
     parser = TensorParser()
     push!(parser.postprocessors, ex -> insertbackend(ex, :cuda))
     return esc(parser(ex))
