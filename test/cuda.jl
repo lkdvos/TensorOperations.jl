@@ -130,7 +130,7 @@ end
     end
 end
 
-@testset "@cutensor" verbose=true begin
+@testset "@cutensor" verbose = true begin
     @testset "tensorcontract 1" begin
         A = randn(Float64, (3, 5, 4, 6))
         @tensor C1[4, 1, 3, 2] := A[1, 2, 3, 4]
@@ -156,7 +156,7 @@ end
         @tensor C1[a] := A[a, b', b']
         @cutensor C2[a] := A[a, b', b']
         @test C1 ≈ collect(C2)
-        
+
         A = randn(Float64, (3, 20, 5, 3, 20, 4, 5))
         @tensor C1[e, a, d] := A[a, b, c, d, b, e, c]
         @cutensor C2[e, a, d] := A[a, b, c, d, b, e, c]
@@ -171,7 +171,7 @@ end
             @cutensor A[a, b, c, d] * B[c, f, b, g]
         end
     end
-    
+
     @testset "tensorcontract 2" begin
         A = randn(Float64, (5, 5, 5, 5))
         B = rand(ComplexF64, (5, 5, 5, 5))
@@ -182,7 +182,7 @@ end
             @cutensor C[a, b, c, d, e, f, g, i] := A[a, b, c, d] * B[e, f, g, h]
         end
     end
-    
+
     @testset "tensorcontract 3" begin
         Da, Db, Dc, Dd, De, Df, Dg, Dh = 10, 15, 4, 8, 6, 7, 3, 2
         A = rand(ComplexF64, (Da, Dc, Df, Da, De, Db, Db, Dg))
@@ -191,7 +191,7 @@ end
         @tensor D1[d, f, h] := A[a, c, f, a, e, b, b, g] * B[c, h, g, e, d] +
                                0.5 * C[d, h, f]
         @cutensor D2[d, f, h] := A[a, c, f, a, e, b, b, g] * B[c, h, g, e, d] +
-                               0.5 * C[d, h, f]
+                                 0.5 * C[d, h, f]
         @test D1 ≈ collect(D2)
         E1 = sqrt(abs((@tensor tensorscalar(D1[d, f, h] * conj(D1[d, f, h])))))
         E2 = sqrt(abs((@cutensor tensorscalar(D2[d, f, h] * conj(D2[d, f, h])))))

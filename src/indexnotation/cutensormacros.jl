@@ -1,5 +1,4 @@
 macro cutensor(ex::Expr)
-    Base.depwarn("`@cutensor expr` is deprecated, use `@tensor backend=cuda expr` instead", :cutensor)
     parser = TensorParser()
     push!(parser.postprocessors, ex -> insertbackend(ex, :cuda))
     return esc(parser(ex))
