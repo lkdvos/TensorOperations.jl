@@ -263,33 +263,28 @@ function TensorOperations.tensortrace!(C::CuArray, pC::Index2Tuple,
     return tensortrace!(C, pC, CuArray(A), pA, conjA, α, β)
 end
 
-function TensorOperations.tensoradd_type(TC, pC::Index2Tuple, ::AbstractArray, conjA::Symbol, ::CUDABackend)
+function TensorOperations.tensoradd_type(TC, pC::Index2Tuple, ::AbstractArray,
+                                         conjA::Symbol, ::CUDABackend)
     return CuArray{TC,TensorOperations.numind(pC)}
 end
 
 function TensorOperations.tensorcontract_type(TC, pC::Index2Tuple, ::AbstractArray,
-                                              pA::Index2Tuple, conjA::Symbol, ::AbstractArray,
+                                              pA::Index2Tuple, conjA::Symbol,
+                                              ::AbstractArray,
                                               pB::Index2Tuple, conjB::Symbol, ::CUDABackend)
     return CuArray{TC,TensorOperations.numind(pC)}
 end
 
-function TensorOperations.tensoralloc_add(TC, pC, A::AbstractArray, conjA, istemp, ::CUDABackend)
-    # if istemp
-    #      ttype = CuArray{TC,TensorOperations.numind(pC)}
-    # else
-    #     ttype = TensorOperations.tensoradd_type(TC, pC, A, conjA, false)
-    # end
+function TensorOperations.tensoralloc_add(TC, pC, A::AbstractArray, conjA, istemp,
+                                          ::CUDABackend)
     ttype = CuArray{TC,TensorOperations.numind(pC)}
     structure = TensorOperations.tensoradd_structure(pC, A, conjA)
     return tensoralloc(ttype, structure, istemp)::ttype
 end
 
-function TensorOperations.tensoralloc_contract(TC, pC, A::AbstractArray, pA, conjA, B::AbstractArray, pB, conjB, istemp, ::CUDABackend)
-    # if istemp
-    #     ttype = CuArray{TC,TensorOperations.numind(pC)}
-    # else
-    #     ttype = TensorOperations.tensorcontract_type(TC, pC, A, pA, conjA, B, pB, conjB, false)
-    # end
+function TensorOperations.tensoralloc_contract(TC, pC, A::AbstractArray, pA, conjA,
+                                               B::AbstractArray, pB, conjB, istemp,
+                                               ::CUDABackend)
     ttype = CuArray{TC,TensorOperations.numind(pC)}
     structure = TensorOperations.tensorcontract_structure(pC, A, pA, conjA, B, pB, conjB)
     return tensoralloc(ttype, structure, istemp)::ttype
