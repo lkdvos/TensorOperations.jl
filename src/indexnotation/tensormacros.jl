@@ -45,7 +45,7 @@ function standardize_kwargs(ex)
         end
         return Expr(:parameters, params...)
     end
-    throw(ArgumentError("unknown keyword expression"))
+    throw(ArgumentError("unknown keyword expression `$ex`"))
 end
 
 macro tensor(kwargsex::Expr, ex::Expr)

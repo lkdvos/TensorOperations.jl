@@ -66,6 +66,8 @@ function addtensoroperations(ex)
     end
 end
 
+const backend_operations = (:tensoradd!, :tensorcontract!, :tensortrace!, :tensoralloc_add, :tensoralloc_contract)
+
 """
     insertbackend(ex, backend)
 
@@ -77,7 +79,7 @@ Insert a backend into a tensor operation, e.g. `tensoradd!(args...)`,
 function insertbackend(ex, backend)
     if isexpr(ex, :call) && ex.args[1] isa GlobalRef &&
        ex.args[1].mod == TensorOperations &&
-       ex.args[1].name ∈ (:tensoradd!, :tensorcontract!, :tensortrace!)
+       ex.args[1].name ∈ backend_operations
         b = Backend{backend}()
         return Expr(:call, ex.args..., b)
     elseif isa(ex, Expr)
